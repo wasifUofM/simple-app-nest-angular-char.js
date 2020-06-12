@@ -24,8 +24,9 @@ export class ReportsController {
     }
 
     @Get('rain/:location')
-    findRainForecast(@Param('location')location) {
-        return this.reportService.getRainForecast(location);
+    findRainForecast(@Param('location')location): Promise<string> {
+        return location;
+       // return this.reportService.getRainForecast(location);
     }
 }
 
