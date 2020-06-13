@@ -11,9 +11,9 @@ import {Chart} from 'node_modules/chart.js';
 export class TopCustomersComponent implements OnInit {
   companyName = [''];
   numberOfEmployees = [0];
+  companyLocations = [];
   backGroundColor = [''];
   barChart = [];
-  locations = [];
 
   constructor(private reportService: ReportsService) {
   }
@@ -21,18 +21,18 @@ export class TopCustomersComponent implements OnInit {
   ngOnInit(): void {
     this.reportService.getTopCustomers().subscribe(topCustomers => {
       topCustomers.forEach(customer => {
-        this.companyName.push(customer.name + '---' + customer.location.toLowerCase());
+        this.companyName.push(customer.name + ' --- ' + customer.location.toLowerCase());
         this.numberOfEmployees.push(customer.num_of_employees);
-        this.locations.push(customer.location);
+        this.companyLocations.push(customer.location);
       });
-      this.getRainForecast(this.locations);
+      this.getWeatherForecast(this.companyLocations);
     });
   }
 
-  getRainForecast(locations: string[]): void {
+  getWeatherForecast(locations: string[]): void {
     this.reportService.getRainForecastForLocation(locations).then(response => {
         locations.forEach(location => {
-          this.backGroundColor.push(this.rainForecast(response.get(location.toLowerCase())));
+          this.backGroundColor.push(this.hasRainForecast(response.get(location.toLowerCase())));
         });
         this.drawBarChart();
       }
@@ -61,7 +61,7 @@ export class TopCustomersComponent implements OnInit {
     });
   }
 
-  rainForecast(hasRainForecast: string): string {
-    return hasRainForecast === 'Rain' ? 'green' : 'red';
+  hasRainForecast(forecast: string): string {
+    return forecast === 'Rain' ? 'green' : 'red';
   }
 }
