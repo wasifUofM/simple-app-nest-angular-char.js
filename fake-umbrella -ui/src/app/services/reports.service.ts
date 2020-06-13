@@ -9,12 +9,10 @@ import config from '../config/keys';
 })
 export class ReportsService {
 
-  hasRainForeCast;
-  rainForecastTime;
   topCustomersApiUrl = config.topCustomersApiUrl;
   weatherApiUrl = config.weatherApiUrl;
   weatherApiKey = config.weatherApiKey;
-  rainForecast = [];
+  weatherMap = new Map();
 
 
   constructor(private http: HttpClient) {
@@ -24,23 +22,13 @@ export class ReportsService {
     return this.http.get<Customer[]>(`${this.topCustomersApiUrl}`);
   }
 
-  getRainForecast(location: string): boolean {
-    this.http.get<any>(this.weatherApiUrl + location + this.weatherApiKey).subscribe(response => {
-      console.log(response);
-      this.hasRainForeCast = response.list[0]['weather'][0]['main'] === 'Rain';
-      this.rainForecastTime = response.list[0]['dt_txt'];
-    });
-    return this.hasRainForeCast;
-  }
-
-  async getRainForecastForLocation(locations: string[]): Promise<string[]> {
+  async getRainForecastForLocation(locations: string[]): Promise<Map<any, any>> {
     locations.forEach(location => {
       this.http.get<any>(this.weatherApiUrl + location + this.weatherApiKey).subscribe(response => {
         console.log(response);
-        this.rainForecast.push(response.list[0]['weather'][0]['main']);
+        this.weatherMap.set(location.toLowerCase(), response.list[0]['weather'][0]['main']);
       });
     });
-
-    return await this.rainForecast;
+    return await this.weatherMap;
   }
 }

@@ -13,7 +13,6 @@ export class TopCustomersComponent implements OnInit {
   numberOfEmployees = [0];
   backGroundColor = [''];
   barChart = [];
-  hasRainForecast;
   locations = [];
 
   constructor(private reportService: ReportsService) {
@@ -22,7 +21,7 @@ export class TopCustomersComponent implements OnInit {
   ngOnInit(): void {
     this.reportService.getTopCustomers().subscribe(topCustomers => {
       topCustomers.forEach(customer => {
-        this.companyName.push(customer.name);
+        this.companyName.push(customer.name + '---' + customer.location.toLowerCase());
         this.numberOfEmployees.push(customer.num_of_employees);
         this.locations.push(customer.location);
       });
@@ -32,11 +31,10 @@ export class TopCustomersComponent implements OnInit {
 
   getRainForecast(locations: string[]): void {
     this.reportService.getRainForecastForLocation(locations).then(response => {
-      response.forEach(hasForecast => {
-          this.hasRainForecast = hasForecast === 'Rain';
-          this.backGroundColor.push(this.rainForecast(this.hasRainForecast));
+        locations.forEach(location => {
+          this.backGroundColor.push(this.rainForecast(response.get(location.toLowerCase())));
         });
-      this.drawBarChart();
+        this.drawBarChart();
       }
     );
   }
@@ -63,7 +61,7 @@ export class TopCustomersComponent implements OnInit {
     });
   }
 
-  rainForecast(hasRainForecast: boolean): string {
-    return hasRainForecast ? 'green' : 'red';
+  rainForecast(hasRainForecast: string): string {
+    return hasRainForecast === 'Rain' ? 'green' : 'red';
   }
 }
