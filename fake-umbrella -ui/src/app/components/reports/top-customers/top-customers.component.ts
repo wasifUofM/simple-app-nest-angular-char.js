@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ReportsService} from '../../../services/reports.service';
 import {Chart} from 'node_modules/chart.js';
+import {Customer} from '../../../models/Customer';
 
 
 @Component({
@@ -14,12 +15,14 @@ export class TopCustomersComponent implements OnInit {
   companyLocations = [];
   backGroundColor = [''];
   barChart = [];
+  topCustomers: Customer[] = [];
 
   constructor(private reportService: ReportsService) {
   }
 
   ngOnInit(): void {
     this.reportService.getTopCustomers().subscribe(topCustomers => {
+      this.topCustomers = topCustomers;
       topCustomers.forEach(customer => {
         this.companyName.push(customer.name + ' --- ' + customer.location.toLowerCase());
         this.numberOfEmployees.push(customer.num_of_employees);
@@ -31,10 +34,10 @@ export class TopCustomersComponent implements OnInit {
 
   getWeatherForecast(locations: string[]): void {
     this.reportService.getRainForecastForLocation(locations).then(response => {
-        locations.forEach(location => {
-          this.backGroundColor.push(this.hasRainForecast(response.get(location.toLowerCase())));
+      this.topCustomers.forEach(customer => {
+          this.backGroundColor.push(this.hasRainForecast(response.get(customer.location.toLowerCase())));
         });
-        this.drawBarChart();
+      this.drawBarChart();
       }
     );
   }
