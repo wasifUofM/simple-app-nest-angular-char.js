@@ -8,6 +8,7 @@ import {FormsModule} from '@angular/forms';
 import { ReportsComponent } from './components/reports/reports.component';
 import { HeaderComponent } from './components/layouts/header/header.component';
 import { TopCustomersComponent } from './components/reports/top-customers/top-customers.component';
+import { AllCustomersComponent } from './components/reports/all-customers/all-customers.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { TopCustomersComponent } from './components/reports/top-customers/top-cu
     ReportsComponent,
     HeaderComponent,
     TopCustomersComponent,
+    AllCustomersComponent,
   ],
   imports: [
     BrowserModule,
