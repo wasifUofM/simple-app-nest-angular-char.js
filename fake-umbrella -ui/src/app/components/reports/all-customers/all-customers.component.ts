@@ -11,7 +11,7 @@ import {ReportsService} from '../../../services/reports.service';
 export class AllCustomersComponent implements OnInit {
   customers: Customer[];
   customerWithForecast: Customer[] = [];
-  companyLocations = [];
+  companyLocations = new Set();
 
   constructor(private customerService: CustomerService, private reportService: ReportsService) {
   }
@@ -20,13 +20,13 @@ export class AllCustomersComponent implements OnInit {
     this.customerService.getCustomers().subscribe(customers => {
       this.customers = customers;
       customers.forEach(customer => {
-        this.companyLocations.push(customer.location);
+        this.companyLocations.add(customer.location.toLowerCase());
       });
       this.getCustomersWithRainForecast(this.companyLocations);
     });
   }
 
-  getCustomersWithRainForecast(locations: string[]): void {
+  getCustomersWithRainForecast(locations: Set<any>): void {
     this.reportService.getRainForecastForLocation(locations).then(response => {
         this.customers.forEach(customer => {
           if (this.hasRainForecast(response.get(customer.location.toLowerCase()))) {

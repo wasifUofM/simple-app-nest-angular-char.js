@@ -16,6 +16,7 @@ export class TopCustomersComponent implements OnInit {
   backGroundColor = [''];
   barChart = [];
   topCustomers: Customer[] = [];
+  companyLocation = new Set();
 
   constructor(private reportService: ReportsService) {
   }
@@ -26,13 +27,13 @@ export class TopCustomersComponent implements OnInit {
       topCustomers.forEach(customer => {
         this.companyName.push(customer.name + ' --- ' + customer.location.toLowerCase());
         this.numberOfEmployees.push(customer.num_of_employees);
-        this.companyLocations.push(customer.location);
+        this.companyLocation.add(customer.location.toLowerCase());
       });
-      this.getWeatherForecast(this.companyLocations);
+      this.getWeatherForecast(this.companyLocation);
     });
   }
 
-  getWeatherForecast(locations: string[]): void {
+  getWeatherForecast(locations: Set<any>): void {
     this.reportService.getRainForecastForLocation(locations).then(response => {
       this.topCustomers.forEach(customer => {
           this.backGroundColor.push(this.hasRainForecast(response.get(customer.location.toLowerCase())));

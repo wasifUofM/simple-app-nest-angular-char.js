@@ -17,7 +17,7 @@ export class ReportsService {
     return this.http.get<Customer[]>(`${config.topCustomersApiUrl}`);
   }
 
-  async getRainForecastForLocation(locations: string[]): Promise<Map<any, any>> {
+  async getRainForecastForLocation(locations: Set<any>): Promise<Map<any, any>> {
     locations.forEach(location => {
       this.http.get<any>(config.weatherApiUrl + location.toLowerCase() + config.weatherApiKey).subscribe(response => {
         console.log(response);
