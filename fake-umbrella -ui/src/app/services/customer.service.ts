@@ -21,11 +21,20 @@ export class CustomerService {
 
   constructor(private http: HttpClient) {
   }
+
   getCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(`${this.apiUrl}${this.topLimit}`);
-
   }
+
   addCustomer(todo: Customer): Observable<Customer> {
     return this.http.post<Customer>(this.apiUrl, todo, httpOptions);
+  }
+
+  getCustomer(id: string): Observable<Customer[]> {
+    return this.http.get<Customer[]>(`${this.apiUrl}/${id}`, httpOptions);
+  }
+
+  updateCustomer(id: string, customer: Customer): Observable<Customer> {
+    return this.http.put<Customer>(`${this.apiUrl}/${id}`, customer, httpOptions);
   }
 }

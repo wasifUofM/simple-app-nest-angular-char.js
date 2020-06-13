@@ -27,6 +27,6 @@ export class CustomersService {
     }
 
     async update(id: string, customer: Customer): Promise<Customer> {
-        return await this.customerModel.findByIdAndUpdate(id, customer);
+        return await this.customerModel.findByIdAndUpdate(id, customer, {new: true});
     }
 }

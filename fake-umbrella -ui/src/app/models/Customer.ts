@@ -1,4 +1,5 @@
 export class Customer {
+  _id: string;
   name: string;
   contact_person: string;
   telephone_num: string;

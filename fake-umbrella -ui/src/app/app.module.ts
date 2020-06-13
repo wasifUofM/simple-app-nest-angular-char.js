@@ -9,6 +9,7 @@ import { ReportsComponent } from './components/reports/reports.component';
 import { HeaderComponent } from './components/layouts/header/header.component';
 import { TopCustomersComponent } from './components/reports/top-customers/top-customers.component';
 import { AllCustomersComponent } from './components/reports/all-customers/all-customers.component';
+import { CustomerFormComponent } from './components/customers/customer-form/customer-form.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { AllCustomersComponent } from './components/reports/all-customers/all-cu
     HeaderComponent,
     TopCustomersComponent,
     AllCustomersComponent,
+    CustomerFormComponent,
   ],
   imports: [
     BrowserModule,

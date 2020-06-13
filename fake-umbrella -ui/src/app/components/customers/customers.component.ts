@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Customer} from '../../models/Customer';
 import {CustomerService} from '../../services/customer.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -11,12 +12,16 @@ export class CustomersComponent implements OnInit {
 
   customers: Customer[];
 
-  constructor(private customerService: CustomerService) {
+  constructor(private customerService: CustomerService, private router: Router) {
   }
 
   ngOnInit(): void {
     this.customerService.getCustomers().subscribe(customers => {
       this.customers = customers;
     });
+  }
+
+  onClickEdit(customer: Customer): void {
+    this.router.navigate(['customer', customer._id, 'edit']);
   }
 }

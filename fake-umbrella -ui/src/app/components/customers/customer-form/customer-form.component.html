@@ -1,0 +1,38 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="col-xs-12" *ngIf="loading">
+      <div class="card">
+        <div class="card-body">
+          Loading ....
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 padding-20" *ngIf="!loading">
+      <h2 *ngIf="mode === 'create'">Add New Customer</h2>
+      <h2 *ngIf="mode === 'edit'">Edit Customer</h2>
+      <form (submit)="onSubmitCustomerForm()">
+        <div class="form-group">
+          <label for="name">Customer Name</label>
+          <input type="text" class="form-control" id="name" [(ngModel)]="customer.name" name="name">
+        </div>
+        <div class="form-group">
+          <label for="contact_person">Contact Person</label>
+          <input type="text" class="form-control" id="contact_person" [(ngModel)]="customer.contact_person" name="contact_person">
+        </div>
+        <div class="form-group">
+          <label for="telephone_num">Telephone No</label>
+          <input type="tel" class="form-control" id="telephone_num" [(ngModel)]="customer.telephone_num" name="telephone_num">
+        </div>
+        <div class="form-group">
+          <label for="location">Location</label>
+          <input type="text" class="form-control" id="location" [(ngModel)]="customer.location" name="location">
+        </div>
+        <div class="form-group">
+          <label for="num_of_employees">No of Employees</label>
+          <input type="number" class="form-control" id="num_of_employees" [(ngModel)]="customer.num_of_employees" name="num_of_employees">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

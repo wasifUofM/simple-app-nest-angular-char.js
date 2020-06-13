@@ -1,10 +1,35 @@
-<h1>
-  All Customers
-</h1>
-<ul *ngFor="let customer of customerWithForecast">
-  <li>Name: {{customer.name}}</li>
-  <li>Contact Person: {{customer.contact_person}}</li>
-  <li>Number of Employees: {{customer.num_of_employees}}</li>
-  <li>Location: {{customer.location}}</li>
-  <li>Phone: {{customer.telephone_num}}</li>
-</ul>
+
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="col-xs-12">
+      <h1>
+       All Customers with Rain Forecast
+      </h1>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Contact Person</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">Number of Employees</th>
+          <th scope="col">Location</th>
+          <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let customer of customerWithForecast">
+          <th scope="row">{{customer.name}}</th>
+          <td>{{customer.contact_person}}</td>
+          <td>{{customer.telephone_num}}</td>
+          <td>{{customer.num_of_employees}}</td>
+          <td>{{customer.location}}</td>
+          <td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
