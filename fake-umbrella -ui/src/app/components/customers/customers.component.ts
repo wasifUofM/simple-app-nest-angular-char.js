@@ -24,4 +24,11 @@ export class CustomersComponent implements OnInit {
   onClickEdit(customer: Customer): void {
     this.router.navigate(['customer', customer._id, 'edit']);
   }
+
+  onClickDelete(customer: Customer): void {
+    this.customerService.deleteCustomer(customer._id).subscribe(customer => {
+        this.customers = this.customers.filter(t => t._id !== customer._id);
+      }
+    );
+  }
 }
