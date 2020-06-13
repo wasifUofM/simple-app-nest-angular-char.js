@@ -13,7 +13,8 @@ export class TopCustomersComponent implements OnInit {
   numberOfEmployees = [0];
   backGroundColor = [''];
   barChart = [];
-  hasRainForecast = false;
+  hasRainForecast;
+  locations = [];
 
   constructor(private reportService: ReportsService) {
   }
@@ -23,11 +24,21 @@ export class TopCustomersComponent implements OnInit {
       topCustomers.forEach(customer => {
         this.companyName.push(customer.name);
         this.numberOfEmployees.push(customer.num_of_employees);
-        this.hasRainForecast = this.reportService.getRainForecast(customer.location);
-        this.backGroundColor.push(this.rainForecast(this.hasRainForecast));
+        this.locations.push(customer.location);
       });
-      this.drawBarChart();
+      this.getRainForecast(this.locations);
     });
+  }
+
+  getRainForecast(locations: string[]): void {
+    this.reportService.getRainForecastForLocation(locations).then(response => {
+      response.forEach(hasForecast => {
+          this.hasRainForecast = hasForecast === 'Rain';
+          this.backGroundColor.push(this.rainForecast(this.hasRainForecast));
+        });
+      this.drawBarChart();
+      }
+    );
   }
 
   drawBarChart(): void {
