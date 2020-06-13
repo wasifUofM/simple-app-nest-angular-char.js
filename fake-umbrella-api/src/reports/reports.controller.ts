@@ -7,14 +7,9 @@ export class ReportsController {
     constructor(private readonly reportService: ReportsService) {
     }
 
-    @Get()
-    findAllCustomers(): Promise<Customer[]> {
-        return this.reportService.findAllCustomerWithForecast();
-    }
-
     @Get('top-customers')
     findTopCustomers(): Promise<Customer[]> {
-        return this.reportService.findTopCustomersWithForecast();
+        return this.reportService.findTopCustomers();
     }
 }
 
