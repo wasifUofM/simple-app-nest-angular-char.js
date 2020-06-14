@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Customer } from 'src/app/models/Customer';
-import { CustomerService } from 'src/app/services/customer.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Customer} from 'src/app/models/Customer';
+import {CustomerService} from 'src/app/services/customer.service';
+import {Router, ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -18,12 +18,13 @@ export class CustomerFormComponent implements OnInit {
   constructor(
     private customerService: CustomerService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(data => {
       if (data.id) {
-        this.mode = 'edit';
+        this.mode = 'update';
         this.loading = true;
         this.customerService.getCustomer(data.id)
           .subscribe((customers: Customer[]) => {
@@ -31,24 +32,33 @@ export class CustomerFormComponent implements OnInit {
             this.loading = false;
           });
       } else {
-        this.mode = 'create';
+        this.mode = 'add';
         this.customer = new Customer();
       }
     });
   }
 
   onSubmitCustomerForm(): void {
-    if (this.mode === 'create') {
-      this.customerService.addCustomer(this.customer)
-        .subscribe((response) => {
-          this.router.navigate(['/']);
-        });
+    if (this.customer.name && this.customer.telephone_num && this.customer.location) {
+      this.mode === 'add' ? this.addCustomer() : this.updateCustomer();
     } else {
-      this.customerService.updateCustomer(this.customer._id, this.customer)
-        .subscribe((customer: Customer) => {
-          this.customer = customer;
-          this.router.navigate(['/']);
-        });
+      alert('Please provide valid input!');
+      return;
     }
+  }
+
+  addCustomer(): void {
+    this.customerService.addCustomer(this.customer)
+      .subscribe((response) => {
+        this.router.navigate(['/']);
+      });
+  }
+
+  updateCustomer(): void {
+    this.customerService.updateCustomer(this.customer._id, this.customer)
+      .subscribe((customer: Customer) => {
+        this.customer = customer;
+        this.router.navigate(['/']);
+      });
   }
 }

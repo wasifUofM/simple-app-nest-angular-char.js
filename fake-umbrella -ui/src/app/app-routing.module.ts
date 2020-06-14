@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: 'reports', component: ReportsComponent},
   {path: 'reports/top-customers', component: TopCustomersComponent},
   {path: 'customer/new', component: CustomerFormComponent},
-  {path: 'customer/:id/edit', component: CustomerFormComponent}
+  {path: 'customer/:id/update', component: CustomerFormComponent}
 ];
 
 @NgModule({

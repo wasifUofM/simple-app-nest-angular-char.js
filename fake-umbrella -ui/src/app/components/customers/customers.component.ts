@@ -21,8 +21,8 @@ export class CustomersComponent implements OnInit {
     });
   }
 
-  onClickEdit(customer: Customer): void {
-    this.router.navigate(['customer', customer._id, 'edit']);
+  onClickUpdate(customer: Customer): void {
+    this.router.navigate(['customer', customer._id, 'update']);
   }
 
   onClickDelete(customer: Customer): void {
