@@ -1,18 +1,35 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { CustomersController } from './customers.controller';
+import {Test} from '@nestjs/testing';
+import * as request from 'supertest';
+import {CustomersModule} from './customers.module';
+import {CustomersService} from './customers.service';
+import {INestApplication} from "@nestjs/common";
 
-describe('Customers Controller', () => {
-  let controller: CustomersController;
+describe('Customer Controller', () => {
+    let app: INestApplication;
+    const customerService = {findAll: () => ['test']};
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [CustomersController],
-    }).compile();
+    beforeAll(async () => {
+        const moduleRef = await Test.createTestingModule({
+            imports: [CustomersModule],
+        })
+            .overrideProvider(CustomersService)
+            .useValue(customerService)
+            .compile();
 
-    controller = module.get<CustomersController>(CustomersController);
-  });
+        app = moduleRef.createNestApplication();
+        await app.init();
+    });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
-  });
+    it(`/GET customers`, () => {
+        return request(app.getHttpServer())
+            .get('/customers')
+            .expect(200)
+            .expect({
+                data: customerService.findAll(),
+            });
+    });
+
+    afterAll(async () => {
+        await app.close();
+    });
 });

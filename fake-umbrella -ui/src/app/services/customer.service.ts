@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Customer} from '../models/Customer';
+import config from '../config/keys';
 
 const httpOptions = {
   headers: new HttpHeaders(
@@ -16,14 +17,12 @@ const httpOptions = {
 })
 export class CustomerService {
 
-  apiUrl = 'http://localhost:3000/customers';
-  topLimit = '?_limit=5';
-
+  apiUrl = config.customersApiUrl;
   constructor(private http: HttpClient) {
   }
 
   getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(`${this.apiUrl}${this.topLimit}`);
+    return this.http.get<Customer[]>(this.apiUrl);
   }
 
   addCustomer(todo: Customer): Observable<Customer> {
