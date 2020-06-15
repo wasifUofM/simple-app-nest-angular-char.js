@@ -10,9 +10,10 @@ import config from './config/keys';
 import {CustomerSchema} from './customers/schemas/customer.schema';
 import { ReportsController } from './reports/reports.controller';
 import { ReportsService } from './reports/reports.service';
+import { ReportsModule } from './reports/reports.module';
 
 @Module({
-    imports: [CustomersModule, MongooseModule.forRoot(config.mongoURI), MongooseModule.forFeature([{name: 'Customer', schema: CustomerSchema}]), HttpModule],
+    imports: [CustomersModule, MongooseModule.forRoot(config.mongoURI), MongooseModule.forFeature([{name: 'Customer', schema: CustomerSchema}]), HttpModule, ReportsModule],
     controllers: [AppController, CustomersController, ReportsController],
     providers: [AppService, CustomersService, ReportsService],
 })
