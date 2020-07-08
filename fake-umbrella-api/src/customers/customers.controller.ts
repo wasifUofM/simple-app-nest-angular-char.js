@@ -6,7 +6,6 @@ import {Customer} from "./interfaces/customer";
 import {
     ApiCreatedResponse,
     ApiOkResponse,
-    ApiUnauthorizedResponse,
     ApiBody,
   } from '@nestjs/swagger';
 
