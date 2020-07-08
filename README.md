@@ -6,6 +6,7 @@ Assume a scenario when a customer support team wants to manage a customer databa
 - Chart JS is used for data visualization. 
 - The application supports create/update'delete records for customers and generate forecasting report based on location using OpenWeatherMap API. 
 - DockerFile has been added and the application can run as a docker container.
+- Swagger has been added for Nest API documentation.
 
 
 To run the nest js app in watch mode:
