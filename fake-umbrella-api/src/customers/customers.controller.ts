@@ -3,6 +3,13 @@ import {CustomerDto} from './dto/customer.dto';
 import {CustomersService} from "./customers.service";
 import {Customer} from "./interfaces/customer";
 
+import {
+    ApiCreatedResponse,
+    ApiOkResponse,
+    ApiUnauthorizedResponse,
+    ApiBody,
+  } from '@nestjs/swagger';
+
 @Controller('customers')
 export class CustomersController {
     constructor(private readonly customersService: CustomersService) {
@@ -19,6 +26,8 @@ export class CustomersController {
     }
 
     @Post()
+    @ApiCreatedResponse({ description: 'Create Customer' })
+    @ApiBody({ type: CustomerDto })
     createCustomer(@Body() createCustomerDto: CustomerDto): Promise<Customer> {
         return this.customersService.create(createCustomerDto);
     }
@@ -29,6 +38,7 @@ export class CustomersController {
     }
 
     @Put(':id')
+    @ApiOkResponse({ description: 'Update current customer' })
     updateCustomer(@Body() updateCustomerDto: CustomerDto, @Param('id') id): Promise<Customer> {
         return this.customersService.update(id, updateCustomerDto);
     }
